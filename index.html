@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mining Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #282c34;
+            color: white;
+        }
+        #game {
+            background: #444;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 300px;
+        }
+        .chest {
+            width: 120px;
+            height: 120px;
+            background: url('./f29d8ba321c46e57309281538e2caa80_w600_h400.png') no-repeat center center;
+            background-size: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .chest:hover {
+            transform: scale(1.1);
+            transition: transform 0.2s;
+        }
+        .chest.shake {
+            animation: shake 0.5s ease;
+        }
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+            100% { transform: rotate(0deg); }
+        }
+        #resources {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+        #inventory {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <h1>Mining Game</h1>
+        <div id="resources">Resources: 0</div>
+        <div class="chest" id="mine-chest"></div>
+        <div id="inventory">Inventory: Empty</div>
+    </div>
+
+    <script>
+        let resources = 0;
+        const items = [];
+        const resourceDisplay = document.getElementById('resources');
+        const inventoryDisplay = document.getElementById('inventory');
+        const mineChest = document.getElementById('mine-chest');
+
+        mineChest.addEventListener('click', () => {
+            // Add shake animation
+            mineChest.classList.add('shake');
+
+            // Remove shake animation after it completes
+            setTimeout(() => {
+                mineChest.classList.remove('shake');
+            }, 500);
+
+            // Increase resources on each click
+            resources++;
+            resourceDisplay.textContent = `Resources: ${resources}`;
+
+            // Add an item to inventory for every 10 resources
+            if (resources % 10 === 0) {
+                const newItem = `Gem ${items.length + 1}`;
+                items.push(newItem);
+                inventoryDisplay.textContent = `Inventory: ${items.join(', ')}`;
+            }
+        });
+    </script>
+</body>
+</html>
